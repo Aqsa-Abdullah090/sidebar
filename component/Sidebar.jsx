@@ -11,67 +11,90 @@ import {
   ChevronDown,
   ChevronRight,
   Flame,
-  Menu,
+  X,
 } from "lucide-react";
 
 const Sidebar = () => {
   const [openTask, setOpenTask] = useState(true);
   const [openSubTask, setOpenSubTask] = useState(true);
 
-  // sidebar toggle
-  const [isOpen, setIsOpen] = useState(true);
+  // Sidebar State
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="flex h-screen bg-[#ececec]">
+    <div className="relative w-full h-screen overflow-hidden">
+      {/* Background Video */}
+      <video
+  autoPlay
+  muted
+  loop
+  playsInline
+  className="absolute inset-0 w-full h-full object-cover"
+>
+  <source src="/background.mp4" type="video/mp4" />
+</video>
+
+
+      {/* Outside Overlay */}
+      {isOpen && (
+        <div
+          onClick={() => setIsOpen(false)}
+          className="absolute inset-0 z-40"
+        />
+      )}
+
       {/* Sidebar */}
       <div
-        className={`bg-[#02182d] text-white flex flex-col justify-between shadow-2xl transition-all duration-300 ${
-          isOpen ? "w-[230px]" : "w-[80px]"
+        onClick={() => {
+          if (!isOpen) {
+            setIsOpen(true);
+          }
+        }}
+        className={`absolute top-0 left-0 z-50 h-full bg-[#02182d]/95 backdrop-blur-xl text-white shadow-2xl transition-all duration-300 flex flex-col justify-between cursor-pointer ${
+          isOpen ? "w-[260px]" : "w-[85px]"
         }`}
       >
         <div>
           {/* Top */}
           <div
-            className={`flex items-center ${
-              isOpen ? "justify-between px-5" : "justify-center"
-            } py-6`}
+            className={`flex items-center py-6 ${
+              isOpen
+                ? "justify-between px-5"
+                : "justify-center"
+            }`}
           >
             {/* Logo */}
             <div className="w-12 h-12 rounded-full bg-[#0d2742] flex items-center justify-center shadow-lg">
               <Flame size={22} />
             </div>
 
-            {/* Toggle Button */}
+            {/* Close Button */}
             {isOpen && (
               <button
-                onClick={() => setIsOpen(false)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsOpen(false);
+                }}
                 className="hover:bg-[#0d2742] p-2 rounded-lg transition"
               >
-                <Menu size={20} />
+                <X size={20} />
               </button>
             )}
           </div>
 
-          {/* Open button when sidebar closed */}
-          {!isOpen && (
-            <div className="flex justify-center mb-5">
-              <button
-                onClick={() => setIsOpen(true)}
-                className="hover:bg-[#0d2742] p-2 rounded-lg transition"
-              >
-                <Menu size={20} />
-              </button>
-            </div>
-          )}
-
           {/* Menu */}
-          <div className="px-3 space-y-2">
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="px-3 space-y-2"
+          >
             {/* Home */}
             <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-blue-500 hover:bg-blue-600 transition-all duration-300">
               <Home size={18} />
 
               {isOpen && (
-                <span className="text-sm font-medium">Home</span>
+                <span className="text-sm font-medium">
+                  Home
+                </span>
               )}
             </button>
 
@@ -80,7 +103,9 @@ const Sidebar = () => {
               <Activity size={18} />
 
               {isOpen && (
-                <span className="text-sm font-medium">Activity</span>
+                <span className="text-sm font-medium">
+                  Activity
+                </span>
               )}
             </button>
 
@@ -94,7 +119,9 @@ const Sidebar = () => {
                   <FolderKanban size={18} />
 
                   {isOpen && (
-                    <span className="text-sm font-medium">Tasks</span>
+                    <span className="text-sm font-medium">
+                      Tasks
+                    </span>
                   )}
                 </div>
 
@@ -110,7 +137,9 @@ const Sidebar = () => {
               {isOpen && (
                 <div
                   className={`overflow-hidden transition-all duration-300 ${
-                    openTask ? "max-h-96 mt-2" : "max-h-0"
+                    openTask
+                      ? "max-h-96 mt-2"
+                      : "max-h-0"
                   }`}
                 >
                   <div className="ml-5 border-l border-[#123456] pl-3 space-y-2">
@@ -125,7 +154,9 @@ const Sidebar = () => {
                     {/* Subtasks */}
                     <div>
                       <button
-                        onClick={() => setOpenSubTask(!openSubTask)}
+                        onClick={() =>
+                          setOpenSubTask(!openSubTask)
+                        }
                         className="w-full flex items-center justify-between px-4 py-2 rounded-md hover:bg-[#0d2742] transition"
                       >
                         <span>Subtasks</span>
@@ -139,7 +170,9 @@ const Sidebar = () => {
 
                       <div
                         className={`overflow-hidden transition-all duration-300 ${
-                          openSubTask ? "max-h-40 mt-2" : "max-h-0"
+                          openSubTask
+                            ? "max-h-40 mt-2"
+                            : "max-h-0"
                         }`}
                       >
                         <div className="ml-5 border-l border-[#123456] pl-3 space-y-2">
@@ -163,7 +196,9 @@ const Sidebar = () => {
               <BarChart3 size={18} />
 
               {isOpen && (
-                <span className="text-sm font-medium">Progress</span>
+                <span className="text-sm font-medium">
+                  Progress
+                </span>
               )}
             </button>
 
@@ -172,7 +207,9 @@ const Sidebar = () => {
               <CreditCard size={18} />
 
               {isOpen && (
-                <span className="text-sm font-medium">Payment</span>
+                <span className="text-sm font-medium">
+                  Payment
+                </span>
               )}
             </button>
 
@@ -181,7 +218,9 @@ const Sidebar = () => {
               <Settings size={18} />
 
               {isOpen && (
-                <span className="text-sm font-medium">Settings</span>
+                <span className="text-sm font-medium">
+                  Settings
+                </span>
               )}
             </button>
           </div>
@@ -196,8 +235,16 @@ const Sidebar = () => {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 p-5">
-        <div className="bg-white rounded-2xl h-full shadow-md"></div>
+      <div className="relative z-10 flex items-center justify-center h-full text-white">
+        <div className="text-center">
+          <h1 className="text-5xl font-bold mb-4">
+            Popup Sidebar
+          </h1>
+
+          <p className="text-lg text-gray-200">
+            Click sidebar to open and outside to close
+          </p>
+        </div>
       </div>
     </div>
   );
