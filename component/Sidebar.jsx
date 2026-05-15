@@ -50,8 +50,8 @@ const Sidebar = () => {
             setIsOpen(true);
           }
         }}
-        className={`absolute top-0 left-0 z-50 h-full bg-[#02182d]/95 backdrop-blur-xl text-white shadow-2xl transition-all duration-300 flex flex-col justify-between cursor-pointer ${
-          isOpen ? "w-[260px]" : "w-[85px]"
+        className={`absolute top-0 left-0 z-50 h-full bg-[#02182d] opacity-70 backdrop-blur-3xl- text-white shadow-2xl transition-all duration-300 flex flex-col justify-between cursor-pointer ${
+          isOpen ? "w-[260px]" : "w-[70px]"
         }`}
       >
         <div>
